@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Чепак](https://up.htmlacademy.ru/javascript/20/user/1050801).
-* Наставник: `Неизвестно`.
+* Наставник: [Михаил Семиколенов](https://htmlacademy.ru/profile/id19706).
 
 ---
 
