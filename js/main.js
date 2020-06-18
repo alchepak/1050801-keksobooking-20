@@ -107,6 +107,36 @@ setCurrentAddress(false);
 
 /* end - Неактивное состояние страницы  */
 
+/* Валидация полей "Количество комнат" и "Количество мест" */
+
+var roomNumberInput = adForm.querySelector('#room_number');
+var capacityInput = adForm.querySelector('#capacity');
+
+var checkCapacityValue = function () {
+  var roomsCount = parseInt(roomNumberInput.value, 10);
+  var capacityCount = parseInt(capacityInput.value, 10);
+
+  if (roomsCount === 100 && capacityCount > 0) {
+    capacityInput.setCustomValidity('100 комнат не для гостей');
+  } else if (roomsCount < 100 && capacityCount === 0) {
+    capacityInput.setCustomValidity('Укажите количество мест');
+  } else if (roomsCount < 100 && capacityCount > roomsCount) {
+    capacityInput.setCustomValidity('Только для гостей, но не более ' + roomsCount);
+  } else {
+    capacityInput.setCustomValidity('');
+  }
+};
+
+roomNumberInput.addEventListener('input', function () {
+  checkCapacityValue();
+});
+
+capacityInput.addEventListener('input', function () {
+  checkCapacityValue();
+});
+
+/* end - Валидация полей "Количество комнат" и "Количество мест" */
+
 /* Активация страницы */
 
 var mapPins = map.querySelector('.map__pins');
@@ -117,6 +147,8 @@ var activatePage = function () {
   changeFormInputsState(adForm, false);
   changeFormInputsState(mapFilters, false);
   setCurrentAddress(true);
+
+  checkCapacityValue();
 
   var mocks = buildAdverts(SIMILAR_ADV_COUNT);
   createPinsFragment(mapPins, mocks);
