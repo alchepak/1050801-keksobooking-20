@@ -2,6 +2,9 @@
 
 var MOUSE_BUTTON_CODE = 0;
 var SIMILAR_ADV_COUNT = 8;
+var MAIN_PIN_WIDTH = 65;
+var MAIN_PIN_HEIGHT = 65;
+var MAIN_PIN_ARROW_HEIGHT = 16;
 var MIN_PIN_TOP = 130;
 var MAX_PIN_TOP = 630;
 var MAX_PRICE = 1000000;
@@ -72,8 +75,11 @@ var getRandomArray = function (items) {
 
 /* Неактивное состояние страницы */
 
-var adForm = document.querySelector('.ad-form');
+var map = document.querySelector('.map');
+var mapPinMain = document.querySelector('.map__pin--main');
 var mapFilters = document.querySelector('.map__filters');
+var adForm = document.querySelector('.ad-form');
+var addressInput = document.querySelector('#address');
 
 var changeFormInputsState = function (form, isDisabled) {
   var formInputs = form.querySelectorAll('input, select, fieldset');
@@ -82,26 +88,35 @@ var changeFormInputsState = function (form, isDisabled) {
   }
 };
 
+var setCurrentAddress = function (isPageActive) {
+  var location = {
+    x: Math.floor(parseInt(mapPinMain.style.left, 10) + MAIN_PIN_WIDTH / 2),
+    y: Math.floor(parseInt(mapPinMain.style.top, 10) + MAIN_PIN_HEIGHT / 2)
+  };
+
+  if (isPageActive) {
+    location.y += Math.floor(MAIN_PIN_HEIGHT / 2 + MAIN_PIN_ARROW_HEIGHT);
+  }
+
+  addressInput.value = location.x + ', ' + location.y;
+};
+
 changeFormInputsState(adForm, true);
 changeFormInputsState(mapFilters, true);
+setCurrentAddress(false);
 
 /* end - Неактивное состояние страницы  */
 
 /* Активация страницы */
 
-var map = document.querySelector('.map');
-var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = map.querySelector('.map__pins');
 
-var enablePageElements = function () {
+var activatePage = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   changeFormInputsState(adForm, false);
   changeFormInputsState(mapFilters, false);
-};
-
-var activatePage = function () {
-  enablePageElements();
+  setCurrentAddress(true);
 
   var mocks = buildAdverts(SIMILAR_ADV_COUNT);
   createPinsFragment(mapPins, mocks);
