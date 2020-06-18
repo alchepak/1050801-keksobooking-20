@@ -1,5 +1,7 @@
 'use strict';
 
+var MOUSE_BUTTON_CODE = 0;
+var SIMILAR_ADV_COUNT = 8;
 var MIN_PIN_TOP = 130;
 var MAX_PIN_TOP = 630;
 var MAX_PRICE = 1000000;
@@ -70,20 +72,57 @@ var getRandomArray = function (items) {
 
 /* Неактивное состояние страницы */
 
-var disableFormInputs = function (form) {
+var adForm = document.querySelector('.ad-form');
+var mapFilters = document.querySelector('.map__filters');
+
+var changeFormInputsState = function (form, isDisabled) {
   var formInputs = form.querySelectorAll('input, select, fieldset');
   for (var i = 0; i < formInputs.length; i++) {
-    formInputs[i].disabled = true;
+    formInputs[i].disabled = isDisabled;
   }
 };
 
-var adForm = document.querySelector('.ad-form');
-disableFormInputs(adForm);
-
-var mapFilters = document.querySelector('.map__filters');
-disableFormInputs(mapFilters);
+changeFormInputsState(adForm, true);
+changeFormInputsState(mapFilters, true);
 
 /* end - Неактивное состояние страницы  */
+
+/* Активация страницы */
+
+var map = document.querySelector('.map');
+var mapPinMain = document.querySelector('.map__pin--main');
+var mapPins = map.querySelector('.map__pins');
+
+var enablePageElements = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  changeFormInputsState(adForm, false);
+  changeFormInputsState(mapFilters, false);
+};
+
+var activatePage = function () {
+  enablePageElements();
+
+  var mocks = buildAdverts(SIMILAR_ADV_COUNT);
+  createPinsFragment(mapPins, mocks);
+};
+
+var onMainPinMouseDown = function (evt) {
+  if (evt.button === MOUSE_BUTTON_CODE) {
+    activatePage();
+  }
+};
+
+var onMainPinEnterPress = function (evt) {
+  if (evt.key === 'Enter') {
+    activatePage();
+  }
+};
+
+mapPinMain.addEventListener('mousedown', onMainPinMouseDown);
+mapPinMain.addEventListener('keydown', onMainPinEnterPress);
+
+/* end - Активация страницы */
 
 /* Отрисовка похожих объявлений */
 
@@ -93,7 +132,7 @@ var buildAdverts = function (length) {
   for (var i = 0; i < length; i++) {
     var advertNumber = addLeadZero(i + 1, 2);
     var objectLocation = {
-      x: generateRandomNumber(PIN_HALF_WIDTH, pinsBlock.clientWidth - PIN_HALF_WIDTH),
+      x: generateRandomNumber(PIN_HALF_WIDTH, mapPins.clientWidth - PIN_HALF_WIDTH),
       y: generateRandomNumber(MIN_PIN_TOP, MAX_PIN_TOP)
     };
 
@@ -154,11 +193,6 @@ var createPinsFragment = function (container, items) {
 
   container.appendChild(fragment);
 };
-
-var map = document.querySelector('.map');
-var pinsBlock = map.querySelector('.map__pins');
-// var mocks = buildAdverts(8);
-// createPinsFragment(pinsBlock, mocks);
 
 /* end - Отрисовка похожих объявлений */
 
