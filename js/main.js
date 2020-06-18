@@ -22,6 +22,8 @@ var PHOTOS = [
 var PIN_HALF_WIDTH = 25;
 var PIN_HEIGHT = 70;
 
+/* Генерация случайных данных */
+
 var addLeadZero = function (num, size) {
   var result = num.toString();
   while (result.length < size) {
@@ -63,6 +65,27 @@ var getRandomArray = function (items) {
 
   return result;
 };
+
+/* end - Генерация случайных данных */
+
+/* Неактивное состояние страницы */
+
+var disableFormInputs = function (form) {
+  var formInputs = form.querySelectorAll('input, select, fieldset');
+  for (var i = 0; i < formInputs.length; i++) {
+    formInputs[i].disabled = true;
+  }
+};
+
+var adForm = document.querySelector('.ad-form');
+disableFormInputs(adForm);
+
+var mapFilters = document.querySelector('.map__filters');
+disableFormInputs(mapFilters);
+
+/* end - Неактивное состояние страницы  */
+
+/* Отрисовка похожих объявлений */
 
 var buildAdverts = function (length) {
   var adverts = [];
@@ -119,7 +142,7 @@ var renderPin = function (template, advert) {
   return pin;
 };
 
-var createPinsFragment = function (items) {
+var createPinsFragment = function (container, items) {
   var template = document.querySelector('#pin').content;
   var mapPin = template.querySelector('.map__pin');
   var fragment = document.createDocumentFragment();
@@ -129,69 +152,72 @@ var createPinsFragment = function (items) {
     fragment.appendChild(htmlItem);
   }
 
-  pinsBlock.appendChild(fragment);
+  container.appendChild(fragment);
 };
 
 var map = document.querySelector('.map');
 var pinsBlock = map.querySelector('.map__pins');
-var filtersContainer = map.querySelector('.map__filters-container');
-map.classList.remove('map--faded');
+// var mocks = buildAdverts(8);
+// createPinsFragment(pinsBlock, mocks);
 
-var mocks = buildAdverts(8);
-createPinsFragment(mocks);
+/* end - Отрисовка похожих объявлений */
 
-var renderAdvertProperty = function (htmlItem, value) {
-  if (value.length > 0) {
-    htmlItem.textContent = value;
-    return;
-  }
+/* Отрисовка карточки объявления */
 
-  htmlItem.style.display = 'none';
-};
+// var filtersContainer = map.querySelector('.map__filters-container');
 
-var renderAdvertPhotos = function (card, photos) {
-  var block = card.querySelector('.popup__photos');
-  var template = block.querySelector('.popup__photo');
+// var renderAdvertProperty = function (htmlItem, value) {
+//   if (value.length > 0) {
+//     htmlItem.textContent = value;
+//     return;
+//   }
 
-  if (photos.length > 0) {
-    var fragment = document.createDocumentFragment();
+//   htmlItem.style.display = 'none';
+// };
 
-    for (var i = 0; i < photos.length; i++) {
-      var image = template.cloneNode();
-      image.src = photos[i];
-      fragment.appendChild(image);
-    }
+// var renderAdvertPhotos = function (card, photos) {
+//   var block = card.querySelector('.popup__photos');
+//   var template = block.querySelector('.popup__photo');
 
-    block.appendChild(fragment);
-  }
+//   if (photos.length > 0) {
+//     var fragment = document.createDocumentFragment();
 
-  template.remove();
-};
+//     for (var i = 0; i < photos.length; i++) {
+//       var image = template.cloneNode();
+//       image.src = photos[i];
+//       fragment.appendChild(image);
+//     }
 
-var renderAdvertCard = function (advert) {
-  var template = document.querySelector('#card').content;
-  var mapCard = template.querySelector('.map__card');
-  var advertCard = mapCard.cloneNode(true);
+//     block.appendChild(fragment);
+//   }
 
-  renderAdvertProperty(advertCard.querySelector('.popup__title'), advert.offer.title);
-  renderAdvertProperty(advertCard.querySelector('.popup__text--address'), advert.offer.address);
-  renderAdvertProperty(advertCard.querySelector('.popup__text--price'), advert.offer.price + '₽/ночь');
-  renderAdvertProperty(advertCard.querySelector('.popup__type'), OFFER_TYPES[advert.offer.type]);
-  renderAdvertProperty(advertCard.querySelector('.popup__text--capacity'), advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей');
-  renderAdvertProperty(advertCard.querySelector('.popup__text--time'), 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout);
+//   template.remove();
+// };
 
-  var popupFeatures = advertCard.querySelector('.popup__features');
-  for (var i = 0; i < FEATURES.length; i++) {
-    if (advert.offer.features.indexOf(FEATURES[i]) < 0) {
-      popupFeatures.querySelector('.popup__feature--' + FEATURES[i]).remove();
-    }
-  }
+// var renderAdvertCard = function (advert) {
+//   var template = document.querySelector('#card').content;
+//   var mapCard = template.querySelector('.map__card');
+//   var advertCard = mapCard.cloneNode(true);
 
-  renderAdvertProperty(advertCard.querySelector('.popup__description'), advert.offer.description);
-  renderAdvertPhotos(advertCard, advert.offer.photos);
-  advertCard.querySelector('.popup__avatar').src = advert.author.avatar;
+//   renderAdvertProperty(advertCard.querySelector('.popup__title'), advert.offer.title);
+//   renderAdvertProperty(advertCard.querySelector('.popup__text--address'), advert.offer.address);
+//   renderAdvertProperty(advertCard.querySelector('.popup__text--price'), advert.offer.price + '₽/ночь');
+//   renderAdvertProperty(advertCard.querySelector('.popup__type'), OFFER_TYPES[advert.offer.type]);
+//   renderAdvertProperty(advertCard.querySelector('.popup__text--capacity'), advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей');
+//   renderAdvertProperty(advertCard.querySelector('.popup__text--time'), 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout);
 
-  map.insertBefore(advertCard, filtersContainer);
-};
+//   var popupFeatures = advertCard.querySelector('.popup__features');
+//   for (var i = 0; i < FEATURES.length; i++) {
+//     if (advert.offer.features.indexOf(FEATURES[i]) < 0) {
+//       popupFeatures.querySelector('.popup__feature--' + FEATURES[i]).remove();
+//     }
+//   }
 
-renderAdvertCard(mocks[0]);
+//   renderAdvertProperty(advertCard.querySelector('.popup__description'), advert.offer.description);
+//   renderAdvertPhotos(advertCard, advert.offer.photos);
+//   advertCard.querySelector('.popup__avatar').src = advert.author.avatar;
+
+//   map.insertBefore(advertCard, filtersContainer);
+// };
+
+/* end - Отрисовка карточки объявления */
