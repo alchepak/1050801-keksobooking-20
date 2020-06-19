@@ -142,16 +142,18 @@ capacityInput.addEventListener('input', function () {
 var mapPins = map.querySelector('.map__pins');
 
 var activatePage = function () {
-  map.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
-  changeFormInputsState(adForm, false);
-  changeFormInputsState(mapFilters, false);
-  setCurrentAddress(true);
+  if (map.classList.contains('map--faded')) {
+    map.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
+    changeFormInputsState(adForm, false);
+    changeFormInputsState(mapFilters, false);
+    setCurrentAddress(true);
 
-  checkCapacityValue();
+    checkCapacityValue();
 
-  var mocks = buildAdverts(SIMILAR_ADV_COUNT);
-  createPinsFragment(mapPins, mocks);
+    var mocks = buildAdverts(SIMILAR_ADV_COUNT);
+    createPinsFragment(mapPins, mocks);
+  }
 };
 
 var onMainPinMouseDown = function (evt) {
