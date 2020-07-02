@@ -1,9 +1,9 @@
 'use strict';
 
-window.util = (function () {
+(function () {
   var MOUSE_BUTTON_CODE = 0;
 
-  var exports = {
+  window.util = {
     isMouseDown: function (evt, callback) {
       if (evt.button === MOUSE_BUTTON_CODE) {
         callback();
@@ -15,6 +15,4 @@ window.util = (function () {
       }
     }
   };
-
-  return exports;
 })();

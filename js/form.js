@@ -1,19 +1,19 @@
 'use strict';
 
-window.form = (function () {
+(function () {
   var addressInput = document.querySelector('#address');
   var roomNumberInput = document.querySelector('#room_number');
   var capacityInput = document.querySelector('#capacity');
 
   roomNumberInput.addEventListener('input', function () {
-    exports.checkCapacityValue();
+    window.form.checkCapacityValue();
   });
 
   capacityInput.addEventListener('input', function () {
-    exports.checkCapacityValue();
+    window.form.checkCapacityValue();
   });
 
-  var exports = {
+  window.form = {
     changeFormInputsState: function (form, isDisabled) {
       var formInputs = form.querySelectorAll('input, select, fieldset');
       for (var i = 0; i < formInputs.length; i++) {
@@ -39,6 +39,4 @@ window.form = (function () {
       addressInput.value = position.x + ', ' + position.y;
     }
   };
-
-  return exports;
 })();

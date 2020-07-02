@@ -1,6 +1,6 @@
 'use strict';
 
-window.pin = (function () {
+(function () {
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
 
@@ -11,7 +11,7 @@ window.pin = (function () {
     };
   };
 
-  var exports = {
+  window.pin = {
     render: function (template, advert) {
       var pin = template.cloneNode(true);
 
@@ -26,6 +26,4 @@ window.pin = (function () {
       return pin;
     }
   };
-
-  return exports;
 })();

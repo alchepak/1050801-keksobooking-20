@@ -1,7 +1,7 @@
 'use strict';
 
-window.data = (function () {
-  var exports = {
+(function () {
+  window.data = {
     addLeadZero: function (num, size) {
       var result = num.toString();
       while (result.length < size) {
@@ -24,14 +24,14 @@ window.data = (function () {
     },
     getRandomProperty: function (object) {
       var keys = Object.keys(object);
-      return exports.getRandomValue(keys);
+      return window.data.getRandomValue(keys);
     },
     getRandomArray: function (items) {
-      var length = exports.generateRandomNumber(0, items.length);
+      var length = window.data.generateRandomNumber(0, items.length);
 
       var result = [];
       for (var i = 0; i < length; i++) {
-        var value = exports.getRandomValue(items);
+        var value = window.data.getRandomValue(items);
         if (result.indexOf(value) < 0) {
           result.push(value);
         }
@@ -40,6 +40,4 @@ window.data = (function () {
       return result;
     }
   };
-
-  return exports;
 })();

@@ -1,13 +1,13 @@
 'use strict';
 
-window.mainPin = (function () {
+(function () {
   var PIN_WIDTH = 65;
   var PIN_HEIGHT = 65;
   var ARROW_HEIGHT = 16;
 
   var pin = document.querySelector('.map__pin--main');
 
-  var exports = {
+  window.mainPin = {
     getPosition: function (isPageActive) {
       var position = {
         x: Math.floor(parseInt(pin.style.left, 10) + PIN_WIDTH / 2),
@@ -21,6 +21,4 @@ window.mainPin = (function () {
       return position;
     }
   };
-
-  return exports;
 })();

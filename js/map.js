@@ -1,6 +1,6 @@
 'use strict';
 
-window.map = (function () {
+(function () {
   var MAX_PRICE = 1000000;
   var OFFER_TYPES = {
     'palace': 'Дворец',
@@ -25,7 +25,7 @@ window.map = (function () {
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
 
-  var exports = {
+  window.map = {
     buildAdverts: function (length) {
       var adverts = [];
 
@@ -72,6 +72,4 @@ window.map = (function () {
       mapPins.appendChild(fragment);
     }
   };
-
-  return exports;
 })();
