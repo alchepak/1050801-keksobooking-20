@@ -17,8 +17,12 @@
     mapPins.appendChild(fragment);
   };
 
-  var onGetDataError = function () {
-    throw new Error('');
+  var onGetDataError = function (message) {
+    var template = document.querySelector('#error').content;
+    var error = template.querySelector('.error');
+    var block = error.cloneNode(true);
+    block.querySelector('.error__message').textContent = message;
+    document.body.appendChild(block);
   };
 
   window.map = {
