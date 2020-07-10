@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var SIMILAR_ADV_COUNT = 8;
-
   var map = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
   var adForm = document.querySelector('.ad-form');
@@ -18,8 +16,7 @@
       window.form.setCurrentAddress(true);
       window.form.checkCapacityValue();
 
-      var mocks = window.map.buildAdverts(SIMILAR_ADV_COUNT);
-      window.map.createPins(mocks);
+      window.map.buildAdverts();
     }
   };
 
