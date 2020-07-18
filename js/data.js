@@ -1,43 +1,30 @@
 'use strict';
 
 (function () {
+  var filtersForm = document.querySelector('.map__filters');
+  var adverts = [];
+
+  var onGetDataSuccess = function (items) {
+    adverts = items.slice();
+    window.data.updateAdverts();
+    window.form.changeFormInputsState(filtersForm, false);
+  };
+
+  var onGetDataError = function (message) {
+    var template = document.querySelector('#error').content;
+    var error = template.querySelector('.error');
+    var block = error.cloneNode(true);
+    block.querySelector('.error__message').textContent = message;
+    document.body.appendChild(block);
+  };
+
   window.data = {
-    addLeadZero: function (num, size) {
-      var result = num.toString();
-      while (result.length < size) {
-        result = '0' + result;
-      }
-
-      return result;
+    getAdverts: function () {
+      window.load(onGetDataSuccess, onGetDataError);
     },
-    generateRandomNumber: function (minValue, maxValue) {
-      var randomValue = Math.floor(Math.random() * (maxValue));
-      if (randomValue < minValue) {
-        return minValue;
-      }
-
-      return randomValue;
-    },
-    getRandomValue: function (items) {
-      var index = Math.random() * items.length;
-      return items[Math.floor(index)];
-    },
-    getRandomProperty: function (object) {
-      var keys = Object.keys(object);
-      return window.data.getRandomValue(keys);
-    },
-    getRandomArray: function (items) {
-      var length = window.data.generateRandomNumber(0, items.length);
-
-      var result = [];
-      for (var i = 0; i < length; i++) {
-        var value = window.data.getRandomValue(items);
-        if (result.indexOf(value) < 0) {
-          result.push(value);
-        }
-      }
-
-      return result;
+    updateAdverts: function () {
+      var filteredAdverts = window.filter(adverts);
+      window.map.renderAdverts(filteredAdverts);
     }
   };
 })();

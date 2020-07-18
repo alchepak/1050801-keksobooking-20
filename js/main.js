@@ -12,11 +12,10 @@
       adForm.classList.remove('ad-form--disabled');
 
       window.form.changeFormInputsState(adForm, false);
-      window.form.changeFormInputsState(filtersForm, false);
       window.form.setCurrentAddress(true);
       window.form.checkCapacityValue();
 
-      window.map.buildAdverts();
+      window.data.getAdverts();
     }
   };
 
@@ -26,6 +25,10 @@
 
   mainPin.addEventListener('keydown', function (evt) {
     window.util.isEnterPress(evt, activatePage);
+  });
+
+  filtersForm.addEventListener('change', function () {
+    window.data.updateAdverts();
   });
 
   window.form.changeFormInputsState(adForm, true);
