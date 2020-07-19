@@ -12,6 +12,8 @@
   var addressInput = document.querySelector('#address');
   var typeSelect = document.querySelector('#type');
   var priceInput = document.querySelector('#price');
+  var timeInSelect = document.querySelector('#timein');
+  var timeOutSelect = document.querySelector('#timeout');
   var roomNumberSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
 
@@ -36,6 +38,14 @@
 
   priceInput.addEventListener('input', function (evt) {
     window.validation.checkPriceValue(evt.target);
+  });
+
+  timeInSelect.addEventListener('change', function (evt) {
+    timeOutSelect.value = evt.target.value;
+  });
+
+  timeOutSelect.addEventListener('change', function (evt) {
+    timeInSelect.value = evt.target.value;
   });
 
   roomNumberSelect.addEventListener('change', function () {
