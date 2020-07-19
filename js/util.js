@@ -13,6 +13,12 @@
       if (evt.key === 'Enter') {
         callback();
       }
+    },
+    isEscPress: function (evt, callback) {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        callback();
+      }
     }
   };
 })();
