@@ -28,6 +28,9 @@
       }
 
       mapPins.appendChild(fragment);
+    },
+    getWidth: function () {
+      return map.clientWidth;
     }
   };
 })();
