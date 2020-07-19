@@ -1,9 +1,27 @@
 'use strict';
 
 (function () {
+  var MIN_TITLE_LENGTH = 30;
+  var MAX_TITLE_LENGTH = 100;
+
+  var titleInput = document.querySelector('#title');
   var addressInput = document.querySelector('#address');
   var roomNumberInput = document.querySelector('#room_number');
   var capacityInput = document.querySelector('#capacity');
+
+  var onCheckTitleValue = function () {
+    var titleLength = titleInput.value.length;
+
+    if (titleInput.validity.valueMissing) {
+      titleInput.setCustomValidity('Обязательное поле');
+    } else if (titleLength < MIN_TITLE_LENGTH) {
+      titleInput.setCustomValidity('Добавьте ещё символов: ' + (MIN_TITLE_LENGTH - titleLength));
+    } else if (titleLength > MAX_TITLE_LENGTH) {
+      titleInput.setCustomValidity('Удалите лишние символы: ' + (titleLength - MAX_TITLE_LENGTH));
+    } else {
+      titleInput.setCustomValidity('');
+    }
+  };
 
   roomNumberInput.addEventListener('input', function () {
     window.form.checkCapacityValue();
@@ -12,6 +30,9 @@
   capacityInput.addEventListener('input', function () {
     window.form.checkCapacityValue();
   });
+
+  titleInput.addEventListener('invalid', onCheckTitleValue);
+  titleInput.addEventListener('input', onCheckTitleValue);
 
   window.form = {
     changeFormInputsState: function (form, isDisabled) {
