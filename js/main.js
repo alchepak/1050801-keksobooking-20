@@ -13,7 +13,7 @@
 
       window.form.changeFormInputsState(adForm, false);
       window.form.setCurrentAddress(true);
-      window.form.checkCapacityValue();
+      window.validation.checkCapacityValue();
 
       window.data.getAdverts();
     }
