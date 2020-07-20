@@ -8,14 +8,16 @@
     'palace': 10000
   };
 
-  var titleInput = document.querySelector('#title');
-  var addressInput = document.querySelector('#address');
-  var typeSelect = document.querySelector('#type');
-  var priceInput = document.querySelector('#price');
-  var timeInSelect = document.querySelector('#timein');
-  var timeOutSelect = document.querySelector('#timeout');
-  var roomNumberSelect = document.querySelector('#room_number');
-  var capacitySelect = document.querySelector('#capacity');
+  var adForm = document.querySelector('.ad-form');
+  var titleInput = adForm.querySelector('#title');
+  var addressInput = adForm.querySelector('#address');
+  var typeSelect = adForm.querySelector('#type');
+  var priceInput = adForm.querySelector('#price');
+  var timeInSelect = adForm.querySelector('#timein');
+  var timeOutSelect = adForm.querySelector('#timeout');
+  var roomNumberSelect = adForm.querySelector('#room_number');
+  var capacitySelect = adForm.querySelector('#capacity');
+  var resetButton = adForm.querySelector('.ad-form__reset');
 
   var onTypeChange = function (evt) {
     priceInput.min = priceListMap[evt.target.value];
@@ -54,6 +56,28 @@
 
   capacitySelect.addEventListener('change', function () {
     window.validation.checkCapacityValue();
+  });
+
+  resetButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.page.reset();
+  });
+
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    var data = new FormData(adForm);
+
+    var onSubmitSuccess = function () {
+      window.page.reset();
+      window.message.show(true);
+    };
+
+    var onSubmitFailure = function (message) {
+      window.message.show(false, message);
+    };
+
+    window.request.upload(data, onSubmitSuccess, onSubmitFailure);
   });
 
   window.form = {
