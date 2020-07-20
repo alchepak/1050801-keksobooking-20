@@ -32,22 +32,13 @@
     template.remove();
   };
 
-  var closeCard = function () {
-    var card = map.querySelector('.map__card');
-
-    document.removeEventListener('keydown', onCardEscPress);
-    if (card !== null) {
-      card.remove();
-    }
-  };
-
   var onCardEscPress = function (evt) {
-    window.util.isEscPress(evt, closeCard);
+    window.util.isEscPress(evt, window.card.close);
   };
 
   window.card = {
     render: function (advert) {
-      closeCard();
+      window.card.close();
 
       var template = document.querySelector('#card').content;
       var mapCard = template.querySelector('.map__card');
@@ -73,11 +64,19 @@
       advertCard.querySelector('.popup__avatar').src = advert.author.avatar;
 
       advertCard.querySelector('.popup__close').addEventListener('click', function () {
-        closeCard();
+        window.card.close();
       });
 
       map.insertBefore(advertCard, filtersContainer);
       document.addEventListener('keydown', onCardEscPress);
+    },
+    close: function () {
+      var card = map.querySelector('.map__card');
+
+      document.removeEventListener('keydown', onCardEscPress);
+      if (card !== null) {
+        card.remove();
+      }
     }
   };
 })();
