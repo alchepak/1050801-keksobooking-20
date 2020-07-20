@@ -23,6 +23,10 @@
       img.src = advert.author.avatar;
       img.alt = advert.offer.title;
 
+      pin.addEventListener('click', function () {
+        window.card.render(advert);
+      });
+
       return pin;
     }
   };
