@@ -11,16 +11,13 @@
   };
 
   var onGetDataError = function (message) {
-    var template = document.querySelector('#error').content;
-    var error = template.querySelector('.error');
-    var block = error.cloneNode(true);
-    block.querySelector('.error__message').textContent = message;
-    document.body.appendChild(block);
+    window.message.show(false, message);
+    window.page.reset();
   };
 
   window.data = {
     getAdverts: function () {
-      window.load(onGetDataSuccess, onGetDataError);
+      window.request.load(onGetDataSuccess, onGetDataError);
     },
     updateAdverts: function () {
       var filteredAdverts = window.filter(adverts);
