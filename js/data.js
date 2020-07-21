@@ -7,7 +7,7 @@
   var onGetDataSuccess = function (items) {
     adverts = items.slice();
     window.data.updateAdverts();
-    window.form.changeFormInputsState(filtersForm, false);
+    window.form.changeInputsState(filtersForm, false);
   };
 
   var onGetDataError = function (message) {

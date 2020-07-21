@@ -23,14 +23,16 @@
     };
   };
 
-  var calcCoordinatesInBox = function (shift) {
+  var setCoordinates = function (shift) {
     var left = pin.offsetLeft - shift.x;
     var top = pin.offsetTop - shift.y;
-
-    return {
+    var newCoordinates = {
       x: Math.max(0 - Math.floor(PinOption.WIDTH / 2), Math.min(boxWidth, left)),
       y: Math.max(MIN_TOP - pinDelta, Math.min(MAX_TOP - pinDelta, top))
     };
+
+    pin.style.top = newCoordinates.y + 'px';
+    pin.style.left = newCoordinates.x + 'px';
   };
 
   var onMouseDown = function (evt) {
@@ -45,9 +47,7 @@
       var shift = getCoordinates(moveEvt, startCoordinates);
       startCoordinates = getCoordinates(moveEvt);
 
-      var newCoordinates = calcCoordinatesInBox(shift);
-      pin.style.top = newCoordinates.y + 'px';
-      pin.style.left = newCoordinates.x + 'px';
+      setCoordinates(shift);
     };
 
     var onMouseUp = function (upEvt) {

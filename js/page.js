@@ -11,7 +11,7 @@
         map.classList.remove('map--faded');
         adForm.classList.remove('ad-form--disabled');
 
-        window.form.changeFormInputsState(adForm, false);
+        window.form.changeInputsState(adForm, false);
         window.form.setCurrentAddress(true);
         window.validation.checkCapacityValue();
 
@@ -29,8 +29,8 @@
       window.map.removeAdverts();
       window.card.close();
 
-      window.form.changeFormInputsState(adForm, true);
-      window.form.changeFormInputsState(filtersForm, true);
+      window.form.changeInputsState(adForm, true);
+      window.form.changeInputsState(filtersForm, true);
       window.form.setCurrentAddress(false);
     }
   };

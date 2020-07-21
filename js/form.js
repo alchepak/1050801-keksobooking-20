@@ -81,7 +81,7 @@
   });
 
   window.form = {
-    changeFormInputsState: function (form, isDisabled) {
+    changeInputsState: function (form, isDisabled) {
       var formInputs = form.querySelectorAll('input, select, fieldset');
       for (var i = 0; i < formInputs.length; i++) {
         formInputs[i].disabled = isDisabled;
