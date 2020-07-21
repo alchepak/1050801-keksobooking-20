@@ -49,7 +49,7 @@
   };
 
   filtersForm.addEventListener('change', function () {
-    window.data.updateAdverts();
+    window.util.debounce(window.data.updateAdverts);
   });
 
   window.filter = function (data) {
