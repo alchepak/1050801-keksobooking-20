@@ -72,6 +72,11 @@
     },
     close: function () {
       var card = map.querySelector('.map__card');
+      var activePins = map.querySelectorAll('.map__pin--active');
+
+      for (var i = 0; i < activePins.length; i++) {
+        activePins[i].classList.remove('map__pin--active');
+      }
 
       document.removeEventListener('keydown', onCardEscPress);
       if (card !== null) {

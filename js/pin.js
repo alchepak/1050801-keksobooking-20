@@ -25,6 +25,7 @@
 
       pin.addEventListener('click', function () {
         window.card.render(advert);
+        pin.classList.add('map__pin--active');
       });
 
       return pin;
