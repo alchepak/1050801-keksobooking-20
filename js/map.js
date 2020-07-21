@@ -5,17 +5,10 @@
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
 
-  var removeAdverts = function () {
-    var adverts = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
-    adverts.forEach(function (it) {
-      mapPins.removeChild(it);
-    });
-  };
-
   window.map = {
     renderAdverts: function (items) {
-      removeAdverts();
-      // здесь будет добавлен вызов метода закрытия карточки из модуля window.card
+      window.map.removeAdverts();
+      window.card.close();
 
       var template = document.querySelector('#pin').content;
       var mapPin = template.querySelector('.map__pin');
@@ -28,6 +21,12 @@
       }
 
       mapPins.appendChild(fragment);
+    },
+    removeAdverts: function () {
+      var adverts = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
+      adverts.forEach(function (it) {
+        mapPins.removeChild(it);
+      });
     },
     getWidth: function () {
       return map.clientWidth;
