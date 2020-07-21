@@ -37,6 +37,17 @@
     return housingGuests.value === DEFAULT_VALUE || it.offer.guests === +housingGuests.value;
   };
 
+  var filterByFeatures = function (it) {
+    var features = filtersForm.querySelectorAll('input[name=features]:checked');
+    for (var i = 0; i < features.length; i++) {
+      if (!it.offer.features.includes(features[i].value)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   filtersForm.addEventListener('change', function () {
     window.data.updateAdverts();
   });
@@ -47,7 +58,8 @@
       .filter(filterByHousingType)
       .filter(filterByPrice)
       .filter(filterByRoomsCount)
-      .filter(filterByGuestsCount);
+      .filter(filterByGuestsCount)
+      .filter(filterByFeatures);
 
     return items;
   };
