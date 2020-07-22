@@ -28,6 +28,7 @@
       window.mainPin.reset();
       window.map.removeAdverts();
       window.card.close();
+      window.image.reset();
 
       window.form.changeInputsState(adForm, true);
       window.form.changeInputsState(filtersForm, true);
