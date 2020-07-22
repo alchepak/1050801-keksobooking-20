@@ -9,35 +9,44 @@
   var imageFrame = document.querySelector('div.ad-form__photo');
   var imagesInput = document.querySelector('#images');
 
-  var showPreview = function (file, preview) {
-    var matches = FILE_TYPES.some(function (it) {
+  var checkFileType = function (file) {
+    return FILE_TYPES.some(function (it) {
       return file.type === it;
     });
+  };
 
-    if (matches) {
-      var reader = new FileReader();
-      reader.addEventListener('load', function () {
-        preview.src = reader.result;
-      });
+  var showPreview = function (file, preview) {
+    var reader = new FileReader();
+    reader.addEventListener('load', function () {
+      preview.src = reader.result;
+    });
 
-      reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
+  };
+
+  var onAvatarChoose = function () {
+    var file = avatarInput.files[0];
+    var isTypeValid = checkFileType(file);
+
+    if (isTypeValid) {
+      showPreview(file, avatar);
     }
   };
 
   var onImageChoose = function () {
-    var img = document.createElement('img');
-    img.classList.add('ad-form__photo');
-    imageFrame.before(img);
-
     var file = imagesInput.files[0];
-    showPreview(file, img);
+    var isTypeValid = checkFileType(file);
+
+    if (isTypeValid) {
+      var img = document.createElement('img');
+      img.classList.add('ad-form__photo');
+      imageFrame.before(img);
+
+      showPreview(file, img);
+    }
   };
 
-  avatarInput.addEventListener('change', function () {
-    var file = avatarInput.files[0];
-    showPreview(file, avatar);
-  });
-
+  avatarInput.addEventListener('change', onAvatarChoose);
   imagesInput.addEventListener('change', onImageChoose);
 
   window.image = {
