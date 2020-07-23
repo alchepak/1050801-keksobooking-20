@@ -45,11 +45,11 @@
     var template = block.querySelector('.popup__photo');
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < photos.length; i++) {
+    photos.forEach(function (it) {
       var image = template.cloneNode();
-      image.src = photos[i];
+      image.src = it;
       fragment.appendChild(image);
-    }
+    });
 
     block.appendChild(fragment);
     template.remove();
@@ -90,9 +90,9 @@
       var card = map.querySelector('.map__card');
       var activePins = map.querySelectorAll('.map__pin--active');
 
-      for (var i = 0; i < activePins.length; i++) {
-        activePins[i].classList.remove('map__pin--active');
-      }
+      Array.from(activePins).forEach(function (it) {
+        it.classList.remove('map__pin--active');
+      });
 
       document.removeEventListener('keydown', onCardEscPress);
       if (card !== null) {

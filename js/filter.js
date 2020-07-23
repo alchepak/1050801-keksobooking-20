@@ -2,6 +2,10 @@
 
 (function () {
   var DEFAULT_VALUE = 'any';
+  var SMALL_PRICE = 10000;
+  var BIG_PRICE = 50000;
+  var MAX_ITEMS_COUNT = 5;
+
   var filtersForm = document.querySelector('.map__filters');
   var housingType = document.querySelector('#housing-type');
   var housingPrice = document.querySelector('#housing-price');
@@ -18,12 +22,12 @@
 
   var filterByPrice = function (it) {
     switch (housingPrice.value) {
-      case 'middle':
-        return it.offer.price >= 10000 && it.offer.price < 50000;
       case 'low':
-        return it.offer.price < 10000;
+        return it.offer.price < SMALL_PRICE;
+      case 'middle':
+        return it.offer.price >= SMALL_PRICE && it.offer.price < BIG_PRICE;
       case 'high':
-        return it.offer.price >= 50000;
+        return it.offer.price >= BIG_PRICE;
     }
 
     return true;
@@ -53,13 +57,19 @@
   });
 
   window.filter = function (data) {
-    var items = data.slice();
-    items = items.filter(filterByOffer)
-      .filter(filterByHousingType)
-      .filter(filterByPrice)
-      .filter(filterByRoomsCount)
-      .filter(filterByGuestsCount)
-      .filter(filterByFeatures);
+    var items = [];
+
+    for (var i = 0; i < data.length; i++) {
+      var item = data[i];
+
+      if (filterByOffer(item) && filterByHousingType(item) && filterByPrice(item) && filterByRoomsCount(item) && filterByGuestsCount(item) && filterByFeatures(item)) {
+        items.push(item);
+
+        if (items.length === MAX_ITEMS_COUNT) {
+          break;
+        }
+      }
+    }
 
     return items;
   };

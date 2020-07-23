@@ -3,6 +3,7 @@
 (function () {
   var MIN_TITLE_LENGTH = 30;
   var MAX_TITLE_LENGTH = 100;
+  var MAX_ROOMS_COUNT = 100;
 
   var roomNumberSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
@@ -36,11 +37,11 @@
       var roomsCount = parseInt(roomNumberSelect.value, 10);
       var capacityCount = parseInt(capacitySelect.value, 10);
 
-      if (roomsCount === 100 && capacityCount > 0) {
-        capacitySelect.setCustomValidity('100 комнат не для гостей');
-      } else if (roomsCount < 100 && capacityCount === 0) {
+      if (roomsCount === MAX_ROOMS_COUNT && capacityCount > 0) {
+        capacitySelect.setCustomValidity(MAX_ROOMS_COUNT + ' комнат не для гостей');
+      } else if (roomsCount < MAX_ROOMS_COUNT && capacityCount === 0) {
         capacitySelect.setCustomValidity('Укажите количество мест');
-      } else if (roomsCount < 100 && capacityCount > roomsCount) {
+      } else if (roomsCount < MAX_ROOMS_COUNT && capacityCount > roomsCount) {
         capacitySelect.setCustomValidity('Только для гостей, но не более ' + roomsCount);
       } else {
         capacitySelect.setCustomValidity('');

@@ -83,9 +83,9 @@
   window.form = {
     changeInputsState: function (form, isDisabled) {
       var formInputs = form.querySelectorAll('input, select, fieldset');
-      for (var i = 0; i < formInputs.length; i++) {
-        formInputs[i].disabled = isDisabled;
-      }
+      Array.from(formInputs).forEach(function (it) {
+        it.disabled = isDisabled;
+      });
     },
     setCurrentAddress: function (isPageActive) {
       var position = window.mainPin.getPosition(isPageActive);
